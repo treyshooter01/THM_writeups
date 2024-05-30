@@ -1,0 +1,12 @@
+Machine name: Source (Exploit a recent vulnerability and hack Webmin, a web-based system configuration tool)
+
+- Nmap: ssh(22) and port 10000 open (Webmin httpd), no username or pwd for ssh so no luck there
+- http://IP:10000 takes us to webmin interface
+- searched the web for some kind of vulnerability, found a github with something to search metasploit with
+- exploit was linux/http/webmin_backdoor, came up after searching webmin_backdoor in msfconsole
+- set the lhost to 1, and enabled ssl, exploit was complete but no session created at first...
+- after more research, I set LHOST to my local IP not 1, shell was created
+- ran whoami and found out that I was root, flags still took some time to find
+- 'cat /root/root.txt got the root flag, then 'cat /home/dark/user.txt' got the user flag
+
+Another one done! Definitely easier since there was not as much on this machine
