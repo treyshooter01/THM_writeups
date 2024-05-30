@@ -1,0 +1,33 @@
+Machine name: Blue (Deploy & hack into a Windows machine, leveraging common misconfigurations issues.)
+
+Recon
+- Machine does not respond to ICMP
+–script vuln runs vulnerability check scripts within nmap scripting engine
+- Critical remote code execution vulnerability exists in Microsoft SMBv1 servers (ms17-010). CVE-2017-0143
+
+Gain Access
+- msfconsole starts metasploit
+- Searched ms17-010, exploit/windows/smb/ms17_010_eternalblue directory was correct option
+- Show options and set required host to exploit
+- due to errors, found that setting LPORT to 4445 was a solution 
+- Set RHOSTS to target IP, then typed 'run' to run exploit
+
+Escalate
+- Looked up how to convert a shell to a meterpreter shell in metasploit, was not necessary in my case but good to know. 'use post/multi/manage/shell_to_meterpreter'
+- ctrl + z backgrounds the session, then back in msfconsole, typed 'sessions' and confirmed a meterpreter shell was running
+- Sessions -i 1 command enters meterpreter shell
+- Used 'getuid' command to verify that escalation to NT AUTHORITY/SYSTEM was successful
+- Ran ps command to see what processes are running, all processes are running on NT AUTHORITY/SYSTEM, pid of one spoolsv.exe (printer process, always system) is 1296, migrating to here…
+
+Cracking
+- Ran hashdump command and dumped all passwords on machine, jon is default user
+- copy jon username and password and place into separate file
+- switch back to regular kali tab
+- run ‘john jon.hash –format=NT –wordlist=/root/Tools/wordlists/rockyou.txt' command to crack password, Password is alqfna22
+
+Find flags!
+- The first flag was in the C:\ directory under flag1.txt; found after 'cd ..' - pretty easy
+- The second flag was in C:\Windows\system32\config directory thanks to the hint. This is where built-in password store ‘Windows Vault/Credential manager’ is located. Network passwords are stored here. You would then get the SAM and SYSTEM file from this directory - easyish
+- The third flag was in the C:\Users\Jon\Documents directory. Hint said elevated privileges which means administrative access, Jon is the admin on this machine. 
+
+All done! Good first machine to pwn, took awhile but worth it.
