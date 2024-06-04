@@ -1,0 +1,5 @@
+- nmap scan revealed ports 80 and 22 (http, ssh), looking at Burpsuite first (if i can get it working)
+- found a exploit for ssh 'unquoted service path privilege escalation', going to try running it
+- target could not stay saved for some reason... trying to find nginx exploits
+- im stupid the OS is linux so previous ssh exploit did not work; nginx exploit did not work so trying another ssh one
+- web address does not seem to exist, not sure why...will come back later
