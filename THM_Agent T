@@ -1,0 +1,6 @@
+- nmap scan revealed that port 80 was open, running php 8.1.0
+- oh looks like this is a very well known vuln, python3 script that generates reverse shell...
+- stuck that in a nano file ran it as a python file, we were prompted to enter in the full url and we were in!
+- ls -lah / reveals all directories from root and I see the flag.txt
+- reading that reveals the flag!
+- that was the easiest rce ever lol, hopefully a harder one to come in the future
